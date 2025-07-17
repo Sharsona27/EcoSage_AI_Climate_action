@@ -51,6 +51,5 @@ EcoSage contributes to:
 SDG 13: Climate Action
 Promotes awareness and behavior change for climate sustainability.
 
-📄 License
-This project is open-source and available under the MIT License.
+
 
