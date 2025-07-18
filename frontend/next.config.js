@@ -15,7 +15,7 @@ const nextConfig = {
       },
       {
         source: '/weather',
-        destination: 'https:/ecosage-ai-climate-action.onrender.com/weather', // Proxy to Flask backend
+        destination: 'https://ecosage-ai-climagitte-action.onrender.com/weather', // Proxy to Flask backend
       },
     ]
   },
