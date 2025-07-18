@@ -10,12 +10,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/chat',
+        source: '/chat',
         destination: 'https://ecosage-ai-climate-action.onrender.com/chat', // Proxy to Flask backend
       },
       {
-        source: '/api/weather',
-        destination: 'https://ecosage-ai-climate-action.onrender.com/weather', // Proxy to Flask backend
+        source: '/weather',
+        destination: 'https:/ecosage-ai-climate-action.onrender.com/weather', // Proxy to Flask backend
       },
     ]
   },
