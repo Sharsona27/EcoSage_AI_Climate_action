@@ -32,4 +32,12 @@ def weather():
         return jsonify(weather_data)
     except Exception as e:
         # Return a fallback error message
-        return jsonify({'error': f'Weather endpoint error: {str(e)}'}), 500 
+        return jsonify({'error': f'Weather endpoint error: {str(e)}'}), 500
+
+@api_bp.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    """
+    Healthcheck endpoint to verify the backend is running.
+    """
+    return jsonify({'status': 'ok', 'message': 'Service is healthy.'}) 
+
