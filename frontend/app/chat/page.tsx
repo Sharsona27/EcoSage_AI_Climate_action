@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Send, Leaf, User, Zap, Globe, TrendingUp } from "lucide-react"
 
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 // Function to call Flask backend for chat reply
 const fetchBackendReply = async (message: string) => {
   try {
-    const res = await fetch("https://ecosage-ai-climate-action.onrender.com/chat", {
+    const res = await fetch(`${backendUrl}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message }),

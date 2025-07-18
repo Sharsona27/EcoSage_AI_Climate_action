@@ -43,6 +43,8 @@ export default function ClimateAlertsPage() {
     "Bhopal",
   ]
 
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   // Fetch weather info from backend when selectedCity changes
   useEffect(() => {
     async function fetchWeather() {
@@ -50,7 +52,7 @@ export default function ClimateAlertsPage() {
       setWeatherError("")
       try {
         // Call live backend /weather endpoint
-        const res = await fetch(`https://ecosage-ai-climate-action.onrender.com/weather?city=${selectedCity}`)
+        const res = await fetch(`${backendUrl}/weather?city=${selectedCity}`)
         if (!res.ok) {
           throw new Error("Failed to fetch weather from backend.");
         }
