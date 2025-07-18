@@ -87,5 +87,5 @@ def get_gemini_reply(prompt):
         return f"Gemini API error: {str(e)}"
 
 if __name__ == "__main__":
-    # Run the app on localhost:5000
-    app.run(debug=True) 
+    # Run the app on 0.0.0.0:5000 for external access
+    app.run(host="0.0.0.0", port=5000, debug=True) 
