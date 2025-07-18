@@ -49,13 +49,16 @@ export default function ClimateAlertsPage() {
       setWeather(null)
       setWeatherError("")
       try {
-        // Call Flask backend /weather endpoint via Next.js proxy
-        const res = await fetch(`/api/weather?city=${selectedCity}`)
-        const data = await res.json()
+        // Call live backend /weather endpoint
+        const res = await fetch(`https://ecosage-ai-climate-action.onrender.com/weather?city=${selectedCity}`)
+        if (!res.ok) {
+          throw new Error("Failed to fetch weather from backend.");
+        }
+        const data = await res.json();
         if (data.error) {
-          setWeatherError(data.error)
+          setWeatherError(data.error);
         } else {
-          setWeather(data)
+          setWeather(data);
         }
       } catch (err) {
         setWeatherError("Failed to fetch weather from backend.")
