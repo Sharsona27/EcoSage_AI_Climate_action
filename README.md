@@ -25,8 +25,10 @@ Deployment: Localhost or cloud (e.g., Render, Railway)
 
 # 📦 Installation & Setup
 # Clone the repository:
-git clone https://github.com/your-username/ecosage-chatbot.git
-cd ecosage-chatbot
+git clone https://github.com/Sharsona27/EcoSage_AI_Climate_action.git
+cd EcoSage_AI_Climate_action
+
+cd Climate action
 
 # Set up a virtual environment:
 python -m venv venv
