@@ -8,7 +8,7 @@ import { Send, Leaf, User, Zap, Globe, TrendingUp } from "lucide-react"
 
 // Function to call Flask backend for chat reply
 const fetchBackendReply = async (message: string) => {
-  const res = await fetch("http://localhost:5000/chat", {
+  const res = await fetch("https://ecosage-ai-climate-action.onrender.com/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message }),
