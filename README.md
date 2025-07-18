@@ -50,5 +50,6 @@ EcoSage contributes to:
 SDG 13: Climate Action
 Promotes awareness and behavior change for climate sustainability.
 
-
+# MIT License © 2025 Sonal Sharma
+Feel free to use, modify, and distribute this software with attribution.
 
