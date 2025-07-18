@@ -2,8 +2,8 @@ import os
 from flask import Flask, send_from_directory, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-from routes import api_bp
-import requests
+from gemini_handler import get_gemini_response
+from weather_api import get_weather_info
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,10 +17,8 @@ app = Flask(__name__, static_folder=FRONTEND_FOLDER, static_url_path='')
 # Enable CORS for API endpoints
 CORS(app)
 
-# Register API blueprint
-app.register_blueprint(api_bp)
-
 # Serve index.html for the root and all frontend routes
+
 @app.route('/')
 @app.route('/about')
 @app.route('/chat')
@@ -50,41 +48,28 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 
 
-@app.route("/chat", methods=["POST"])
+@app.route('/chat', methods=['POST'])
 def chat():
-    data = request.get_json()
-    user_message = data.get("message", "")
-
-    # Check if it's a weather question
-    if "weather" in user_message.lower():
-        weather = get_weather()
-        return jsonify({"reply": f"🌤️ Weather Update: {weather}"})
-
-    # Otherwise, call Gemini
-    reply = get_gemini_reply(user_message)
-    return jsonify({"reply": reply})
-
-
-def get_weather(city="Bharuch"):
     try:
-        url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}&aqi=no"
-        res = requests.get(url)
-        data = res.json()
-        condition = data['current']['condition']['text']
-        temp = data['current']['temp_c']
-        return f"It's currently {condition} and {temp}°C in {city}."
+        data = request.get_json()
+        user_message = data.get('message', '') if data else ''
+        response_text = get_gemini_response(user_message)
+        return jsonify({'reply': response_text})
     except Exception as e:
-        return "Unable to fetch weather info right now."
+        return jsonify({'error': f'Chat endpoint error: {str(e)}'}), 500
 
-def get_gemini_reply(prompt):
+@app.route('/weather', methods=['GET'])
+def weather():
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
-        response = model.generate_content(prompt)
-        return response.text
+        city = request.args.get('city', '')
+        weather_data = get_weather_info(city)
+        return jsonify(weather_data)
     except Exception as e:
-        return f"Gemini API error: {str(e)}"
+        return jsonify({'error': f'Weather endpoint error: {str(e)}'}), 500
+
+@app.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    return jsonify({'status': 'ok', 'message': 'Service is healthy.'})
 
 if __name__ == "__main__":
     # Run the app on 0.0.0.0:5000 for external access
